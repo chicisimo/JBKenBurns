@@ -155,8 +155,8 @@ enum JBSourceMode {
     float moveX         = -1;
     float moveY         = -1;
     
-    float frameWidth    = _isLandscape ? self.bounds.size.width: self.bounds.size.height;
-    float frameHeight   = _isLandscape ? self.bounds.size.height: self.bounds.size.width;
+    float frameWidth    = _isLandscape ? self.bounds.size.height : self.bounds.size.width;
+    float frameHeight   = _isLandscape ? self.bounds.size.width : self.bounds.size.height;
     
     float resizeRatio = [self getResizeRatioFromImage:image width:frameWidth height:frameHeight];
     
@@ -167,8 +167,8 @@ enum JBSourceMode {
     imageView.backgroundColor = [UIColor blackColor];
     
     // Calcule the maximum move allowed.
-    float maxMoveX = optimusWidth - frameWidth;
-    float maxMoveY = optimusHeight - frameHeight;
+    float maxMoveX = arc4random_uniform(optimusWidth - frameWidth);
+    float maxMoveY = arc4random_uniform(optimusHeight - frameHeight);
     
     float rotation = (arc4random() % 9) / 100;
     int moveType = arc4random() % 4;
@@ -220,9 +220,6 @@ enum JBSourceMode {
             moveY   = -maxMoveY;
             break;
     }
-    
-//    NSLog(@"W: IW:%f OW:%f FW:%f MX:%f",image.size.width, optimusWidth, frameWidth, maxMoveX);
-//    NSLog(@"H: IH:%f OH:%f FH:%f MY:%f\n",image.size.height, optimusHeight, frameHeight, maxMoveY);
     
     CALayer *picLayer    = [CALayer layer];
     picLayer.contents    = (id)image.CGImage;
@@ -325,7 +322,7 @@ enum JBSourceMode {
             heightDiff = frameHeight - image.size.height;
             
             if (widthDiff > heightDiff)
-                resizeRatio = frameWidth / image.size.width;
+                resizeRatio =  image.size.width / frameWidth;
             else
                 resizeRatio = self.bounds.size.height / image.size.height;
         }
