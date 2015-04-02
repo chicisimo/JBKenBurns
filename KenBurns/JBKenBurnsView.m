@@ -24,8 +24,12 @@
 
 #import "JBKenBurnsView.h"
 
-#define enlargeRatio 1.1
+#define enlargeRatio 1.35
 #define imageBufer 3
+#define maxMoveX 10
+#define maxMoveY 10
+#define zoomX 1.05
+#define zoomY 1.05
 
 enum JBSourceMode {
     JBSourceModeImages,
@@ -166,10 +170,6 @@ enum JBSourceMode {
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, optimusWidth, optimusHeight)];
     imageView.backgroundColor = [UIColor blackColor];
     
-    // Calcule the maximum move allowed.
-    float maxMoveX = arc4random_uniform(optimusWidth - frameWidth);
-    float maxMoveY = arc4random_uniform(optimusHeight - frameHeight);
-    
     float rotation = (arc4random() % 9) / 100;
     int moveType = arc4random() % 4;
     
@@ -177,8 +177,8 @@ enum JBSourceMode {
         case 0:
             originX = 0;
             originY = 0;
-            zoomInX = 1.25;
-            zoomInY = 1.25;
+            zoomInX = zoomX;
+            zoomInY = zoomY;
             moveX   = -maxMoveX;
             moveY   = -maxMoveY;
             break;
@@ -186,8 +186,8 @@ enum JBSourceMode {
         case 1:
             originX = 0;
             originY = frameHeight - optimusHeight;
-            zoomInX = 1.10;
-            zoomInY = 1.10;
+            zoomInX = zoomX;
+            zoomInY = zoomY;
             moveX   = -maxMoveX;
             moveY   = maxMoveY;
             break;
@@ -195,8 +195,8 @@ enum JBSourceMode {
         case 2:
             originX = frameWidth - optimusWidth;
             originY = 0;
-            zoomInX = 1.30;
-            zoomInY = 1.30;
+            zoomInX = zoomX;
+            zoomInY = zoomY;
             moveX   = maxMoveX;
             moveY   = -maxMoveY;
             break;
@@ -204,8 +204,8 @@ enum JBSourceMode {
         case 3:
             originX = frameWidth - optimusWidth;
             originY = frameHeight - optimusHeight;
-            zoomInX = 1.20;
-            zoomInY = 1.20;
+            zoomInX = zoomX;
+            zoomInY = zoomY;
             moveX   = maxMoveX;
             moveY   = maxMoveY;
             break;
